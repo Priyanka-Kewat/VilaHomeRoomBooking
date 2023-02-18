@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hotel Villa</title>
+    
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+    
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="./src/style.css">
+    <link rel="stylesheet" href="./src/responsive.css">
+    <script src="./src/index.js"></script>
+  </head>
+  <body onload="VerifyDate()" onchange="bodyload()" data-bs-spy="scroll" data-bs-target=".navbar" data-bs-offset="100">
+    <!-- Navbar section -->
+    <header class="header_wrapper">
+      <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container">
+          <a class="navbar-brand" href="#">
+            <img src="./public/logo.png" class="img-fluid" alt="logo" />
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div
+            class="collapse navbar-collapse justify-content-end"
+            id="navbarSupportedContent"
+          >
+            <ul class="navbar-nav menu-navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link active"  id="link-hover" aria-current="page" href="#home"
+                  >Home</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" id="link-hover" aria-current="page" href="#about"
+                  >About</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" id="link-hover" aria-current="page" href="#rooms"
+                  >Rooms</a
+                >
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link active" id="link-hover" aria-current="page" href="#contact"
+                  >Contact</a
+                >
+              </li>
+              <button onclick="bookFormClick()" id="bookNowBtn" class="btn btn-outline-warning" >Book Now</button>
+              <div class="row  " id="Preview" style="display:none">
+                <button class="btn btn-outline-info w-100" onclick="showModal()" data-bs-toggle="modal" data-bs-target="#billSummary">Preview Details</button>
+                <div class="modal fade" id="billSummary">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2>Bill Summary</h2>
+                                <button data-bs-dismiss="modal" class="btn-close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <dl class="row">
+                                    <dt class="col-lg-6 m-2">Customer Name</dt>
+                                    <dd id="lblName" class="col-lg-5 m-2"></dd>
+                                    <dt class="col-lg-6 m-2">Customer Mobile Number</dt>
+                                    <dd id="lblMobile" class="col-lg-5 m-2"></dd>
+                                    <dt class="col-lg-6 m-2">Check-in Date</dt>
+                                    <dd id="lblDate" class="col-lg-5 m-2"></dd>
+                                    <dt class="col-lg-6 m-2">Totel Number Of Days</dt>
+                                    <dd id="lblDays" class="col-lg-5 m-2"></dd>
+                                    <dt class="col-lg-6 m-2">Totel Number of Person</dt>
+                                    <dd id="lblPerson" class="col-lg-5 m-2"></dd>
+                                    <dt class="col-lg-6 m-2">Room Type</dt>
+                                    <dd id="lblRoom" class="col-lg-5 m-2"></dd>
+                                    <dt class="col-lg-6 m-2">Amenities</dt>
+                                    <dd id="lblAmenities" class="col-lg-5 m-2"></dd>
+                                    <dt class="col-lg-6 m-2">Totel Amount</dt>
+                                    <dd id="lblGross" class="col-lg-5 m-2"></dd>
+                                    <dt class="col-lg-6 m-2">Advance Amount</dt>
+                                    <dd id="lblAdvance" class="col-lg-5 m-2"></dd>
+                                </dl>
+                                <div class="row p-2">
+                                    <dt class="col-lg-6">You have to pay</dt>
+                                    <dd class="col-lg-5" id="lblTotel"></dd>
+                                </div>
+                            </div>
+                            <div class="modal-footer text-start">
+                                <button data-bs-dismiss="modal" class="btn btn-outline-secondary">OK</button>
+                            </div>
+                        </div>
+    
+                    </div>
+    
+                </div>
+            </div>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <section id="bookNowPage" style="display: none;" class="container mt-5"> 
+            <div class="row">
+                <div class="col-lg-3 border border-end-0 border-top-0 border-bottom-0 border-5 border-secondary rounded-start ">
+                    <h3>Custumer Details</h3>
+                </div>
+                <div class="col-lg-9 border-start border-1">
+                    <dl class="row">
+                        <dt class="col-lg-4">Customer Name</dt>
+                        <dd class="col-lg-8"><input type="text" onkeyup="VerifyName()" class="form-control" id="txtName"><span id="msgName"></span></dd>
+                        <dt class="col-lg-4">Customer Mobile Number</dt>
+                        <dd class="col-lg-8"><input type="text" onkeyup="VerifyMobile()" minlength="10" maxlength="10" class="form-control" id="txtMobile"><span id="msgMobile"></span></dd>
+                        <dt class="col-lg-4">Check-in Date</dt>
+                        <dd class="col-lg-8"><input type="date" onkeydown="return false" class="input-medium search-query form-control" id="txtDate"><span id="msgDate" class="msg">Note: You can select only for the next 1 year</span></dd>
+                        <dt class="col-lg-4">Totel Number of Days</dt>
+                        <dd class="col-lg-8"><input type="number" onblur="VerifyDays()" min="1" max="30" value="1" class="form-control" id="txtDays"><span id="msgDays" class="msg">Note: You can select only 1-30 Days.</span></dd>
+                        <dt class="col-lg-4">Totel Number of Person's</dt>
+                        <dd class="col-lg-8"><input type="number" onblur="VerifyPerson()" min="1" max="5" value="1" class="form-control" id="txtPerson"><span id="msgPerson" class="msg">Note: You can select only 1-5 Persons.</span></dd>
+                    </dl>
+                </div>
+            </div>
+    
+            <div class="row mt-2">
+                <div class="col-lg-3 border border-end-0 border-top-0 border-bottom-0 border-5 border-secondary rounded-start ">
+                    <h3>Select Room Type</h3>
+                </div>
+                <div class="col-lg-9 border-start border-1">
+                    <div class="row">
+                        <div class="col">
+                            <div class="card w-75 m-auto">
+                                <img src="./public/deluxroom.jpg" alt="" class="card-img-top">
+                                <div class="card-header">
+                                    <h4>Delux Room</h4>
+                                </div>
+                                <div class="card-body">
+                                    <h5>
+                                        <input type="radio" checked name="roomType" id="optDelux" value="Delux" class="form-check-input">
+                                        &#8377; 2500/per day
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="col">
+                            <div class="card w-75 m-auto">
+                                <img src="./public/suiteroom.jpg" alt="" class="card-img-top">
+                                <div class="card-header">
+                                    <h4>Suite Room</h4>
+                                </div>
+                                <div class="card-body">
+                                    <h5>
+                                        <input type="radio" name="roomType" id="optSuite" value="Suite" class="form-check-input">
+                                        &#8377; 4000/per day
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+    
+            <div class="row mt-2">
+                <div class="col-lg-3 border border-end-0 border-top-0 border-bottom-0 border-5 border-secondary rounded-start ">
+                    <h3>Select Amenities</h3>
+                </div>
+                <div class="col-lg-9 border-start border-1">
+                    <div class="row">
+                        <div class="col">
+                            <div class="card w-75 m-auto">
+                                <img src="./public/acimg.jpg" alt="" class="card-img-top">
+                                <div class="card-header">
+                                    <h4>A/C</h4>
+                                </div>
+                                <div class="card-body">
+                                    <h5>
+                                        <input type="checkbox" id="optAc" value="A/C" class="form-check-input">
+                                        &#8377; 1000/-
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="col">
+                            <div class="card w-75 m-auto">
+                                <img src="./public/locker.jpg" alt="" class="card-img-top">
+                                <div class="card-header">
+                                    <h4>Locker</h4>
+                                </div>
+                                <div class="card-body">
+                                    <h5>
+                                        <input type="checkbox" id="optLocker" value="Locker" class="form-check-input">
+                                        &#8377; 300/-
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+    
+            <div class="row mt-2">
+                <div class="col-lg-3  border border-end-0 border-top-0 border-bottom-0 border-5 border-secondary rounded-start ">
+                    <h3>Advance Amount</h3>
+                </div>
+                <div class="col-lg-9 mt-4 border-start border-1">
+                    <dl class="row">
+                        <dt class="col-lg-3">Advance Amount</dt>
+                        <dd class="col-lg-9"><input type="number" onfocus="bodyload()" onblur="VerifyAdvance()" min="500" value="500" class="form-control" id="txtAdvance"><span id="msgAdvance" class="msg">Note: You can pay minimum Rs.500 Advance.</span></dd> 
+                    </dl>
+                </div>
+            </div>
+            <div class="row mt-3 mb-2">
+                <button  onclick="bookClick()" id="btnBook"  class="btn btn-dark">Book Now</button>
+            </div>
+
+            <div class="row mt-3 mb-2">
+              <button  onclick="closeClick()" id="btnClose"  class="btn btn-danger">Close</button>
+          </div>
+    
+            
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- banner section -->
+    <section id="home" class="banner_wrapper">
+      <div id="carouselExampleCaptions" class="carousel slide">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="./public/roomhotel (1).jpg" class="d-block w-100 imges" alt="loading"  >
+            <div class="carousel-caption d-none d-md-block">
+              <h3 class="text-dark">Welcome To VilaHome</h3>
+              <p >A hotel is a commercial establishment that provides lodging, meals, and other services to guests, travelers, and tourists.</p>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img src="./public/roomhotel (3).jpg" class="d-block w-100 imges" alt="loading" >
+            <div class="carousel-caption d-none d-md-block">
+              <h3 class="text-dark">Welcome To VilaHome</h3>
+              <p>A hotel is a commercial establishment that provides lodging, meals, and other services to guests, travelers, and tourists.</p>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img src="./public/roomhotel (2).jpg" class="d-block w-100 imges" alt="loading" >
+            <div class="carousel-caption d-none d-md-block">
+              <h3 class="text-dark">Welcome To VilaHome</h3>
+              <p>A hotel is a commercial establishment that provides lodging, meals, and other services to guests, travelers, and tourists.</p>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+
+    </section>
+
+    <!-- about section -->
+    <section id="about" class="mt-4">
+      <div class="container">
+          <div class="row flex-lg-row flex-column-reverse">
+            <div class="col-lg-6 text-center text-lg-start">
+              <h3 style="color:#021832;">Welcome To <span style="color:#caa169;">VillaHome</span> <br> <span style="color:#caa169;">the heaven</span>  of Your weekend </h3>
+              <p>A hotel is a commercial establishment that provides lodging, meals, and other services to guests, travelers, and tourists. Hotels can range from small family-run businesses to large international chains. Most hotels list a variety of services, such as room service, laundry, and concierge.</p>
+              <p>A hotel is a commercial establishment that provides lodging, meals, and other services to guests, travelers, and tourists.</p>
+            </div>
+            <div class="col-lg-6 mb-4 mb-lg-0 ps-lg-4 text-center">
+              <img id="aboutsimg" src="./public/checkin sec.jpg" alt="loading">
+            </div>
+          </div>
+      </div>
+
+    </section>
+
+    <!-- rooms section -->
+    <section id="rooms" class="rooms-wrapper mt-4">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-12 text-center  mb-5 section-title">
+              <h6>What I can Do For You</h6>
+              <p style="color:#021832; font-size: 30px; font-weight: bold;">Our Favorate rooms</p>
+          </div>
+        </div>
+        <div class="row m-0">
+          <div class="col-md-4 mb-4 mb-lg-0">
+              <div class="room-items">
+                <img src="./public/roomfst.jpg" alt="loading" class="img-fluid">
+                <div class="room-item-wrap">
+                    <div class="room-content">
+                        <h5 class="text-white mb-lg-5 text-decoration-underline">Royal Suit</h5>
+                        
+                    </div>
+                </div>
+              </div>
+          </div>
+          <div class="col-md-4 mb-4 mb-lg-0">
+            <div class="room-items">
+              <img src="./public/roomfive.jpg" alt="loading" class="img-fluid">
+              <div class="room-item-wrap">
+                  <div class="room-content">
+                      <h5 class="text-white mb-lg-5 text-decoration-underline" >Royal Suit</h5>
+                      
+                  </div>
+              </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4 mb-lg-0">
+          <div class="room-items">
+            <img src="./public/roomthrd.jpg" alt="loading" class="img-fluid">
+            <div class="room-item-wrap">
+                <div class="room-content">
+                    <h5 class="text-white mb-lg-5 text-decoration-underline">Royal Suit</h5>
+                    
+                </div>
+            </div>
+          </div>
+      </div>
+
+        </div>
+      </div>
+
+    </section>
+
+    <footer id="contact" class="mt-4 footer_wrapper mt-md-0 pb-0 p-2">
+      <div class="container pb-3">
+        <div class="row">
+          <div class="col-lg-3 col-md-6">
+            <h5>Hotel Location</h5>
+            <p class="ps-0">hotel Location nearest by station of nanakarmguda</p>
+              <div class="contact-info">
+                <ul class="list-unstyled ">
+                    <li><i class="bi bi-geo-alt"></i>No. 96 south city hyderabad</li>
+                    <li><i class="bi bi-telephone-x"></i>+91 7453202487</li>
+                    <li><i class="bi bi-envelope-at"></i>info@example.com</li>
+                </ul>
+              </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+              <h5>More Links</h5>
+              <ul>
+                <li>About US</li>
+                <li>Our Office </li>
+                <li>Delivery</li>
+                <li>Our store</li>
+                <li>Guarantee</li>
+                <li>Buy Gift Card</li>
+                <li>Return Policy</li>
+              </ul>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <h5>More Links</h5>
+            <ul>
+              <li>About US</li>
+              <li>Our Office </li>
+              <li>Delivery</li>
+              <li>Our store</li>
+              <li>Guarantee</li>
+              <li>Buy Gift Card</li>
+              <li>Return Policy</li>
+            </ul>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <h5>News Letter</h5>
+          <div class="form-group mb-4">
+              <input type="email" class="form-control bg-transparent" placeholder="Enter Your Email">
+              <button type="submit" class="btn btn-warning rounded-2 mt-2">Subscribe</button>
+          </div>
+          <h5>Stay Connected</h5>
+          <ul class="social-network d-flex align-items-center p-0 ">
+            <li><i class="bi bi-facebook me-2"></i></li>
+            <li><i class="bi bi-twitter me-2"></i></li>
+            <li><i class="bi bi-instagram me-2"></i></li>
+            <li><i class="bi bi-linkedin me-2"></i></li>
+          </ul>
+      </div>
+        </div>
+      </div>
+      <div class="container-fluid">
+        <p>CopyRight @ VilaHome All Rights Reserved</p>
+      </div>
+    </footer>
+  </body>
+</html>
